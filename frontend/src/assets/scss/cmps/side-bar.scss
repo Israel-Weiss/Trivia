@@ -1,0 +1,22 @@
+.side-bar-continer {
+    position: absolute;
+    top: 60px;
+    width: 100%;
+    background-color: #131921;
+    color: aliceblue;
+    height: 100%;
+    padding: 40px;
+    z-index: 2;
+    font-size: 18px;
+
+    .link {
+        margin-bottom: 15px;
+    }
+
+
+
+}
+
+.side-bar-continer.hidden {
+    display: none;
+}

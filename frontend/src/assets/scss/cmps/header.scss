@@ -1,0 +1,104 @@
+.main-header {
+
+    .header-desktop {
+        display: none;
+
+        @include desktop-layout {
+            display: flex;
+            justify-content: space-between;
+            height: 80px;
+            padding-left: 2vh;
+            padding-right: 2vh;
+            align-items: center;
+            background-color: #131921;
+            color: aliceblue;
+            font-size: 1.2rem;
+
+            .navigate {
+                width: 50vw;
+                margin-top: auto;
+                font-family: roboto, sans-serif;
+
+                .list {
+                    display: flex;
+                    justify-content: space-between;
+                    list-style: none;
+                    margin-bottom: 15px;
+
+                    .link {
+                        height: 30px;
+                        width: 18%;
+                        color: aliceblue;
+                        text-align: center;
+                        cursor: pointer;
+
+                        &::after {
+                            content: "";
+                            display: block;
+                            border-bottom: solid 4px chartreuse;
+                            width: 0;
+                            padding-top: 6px;
+                            position: relative;
+                            transition: width 0.3s;
+                        }
+
+
+                        &:hover {
+                            color: chartreuse;
+                            transition: 0.3s;
+                            font-size: 1.05em;
+
+                            &:hover::after {
+                                width: 100%;
+                            }
+                        }
+
+                        &:active {
+                            color: brown;
+                        }
+
+                    }
+                }
+            }
+        }
+    }
+
+    .header-mobile {
+        display: flex;
+        align-items: center;
+        height: 60px;
+        background-color: #131921;
+        color: aliceblue;
+        z-index: 10;
+
+        .menu-btn {
+            position: absolute;
+            right: 22px;
+            font-size: 25px;
+            cursor: pointer;
+        }
+
+        .close-btn {
+            position: absolute;
+            right: 20px;
+            width: 48px;
+            height: 40px;
+            font-size: 25px;
+            cursor: pointer;
+        }
+
+        .close-btn.hidden {
+            display: none;
+        }
+
+        .config {
+            margin-left: 40px;
+            font-size: 20px;
+        }
+
+        @include desktop-layout {
+            display: none;
+        }
+    }
+
+}
