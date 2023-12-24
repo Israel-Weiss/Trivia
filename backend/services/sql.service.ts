@@ -1,6 +1,5 @@
 const mysql = require('mysql2');
 
-
 function query(sql: string) {
     return new Promise((resolve, reject) => {
         const conDb = mysql.createConnection({
@@ -9,11 +8,10 @@ function query(sql: string) {
             password: "password",
             database: 'questionsProject'
         })
-        conDb.connect((err: any) => {
+        conDb.connect((err: Error | null) => {
             if (err) throw err
-            conDb.query(sql, (err: any, result: any) => {
+            conDb.query(sql, (err: Error | null, result: any ) => {
                 if (err) reject(err)
-                console.log('result', result)
                 resolve(result)
             })
             conDb.end()

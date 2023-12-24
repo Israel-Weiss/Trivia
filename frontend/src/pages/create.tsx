@@ -1,4 +1,5 @@
-import { ReactElement, useState } from "react"
+import { ReactElement, useState, useEffect, useRef } from "react"
+import { CreateSuc } from "../cmps/create-suc"
 import { addQuest } from "../services/quest.service"
 
 export function Create(): ReactElement {
@@ -12,8 +13,21 @@ export function Create(): ReactElement {
         correct: ''
     })
 
+    const [stepNum, setStepNum] = useState(0)
 
-    const handleChange = (ev: React.FormEvent<HTMLInputElement | HTMLSelectElement>): void => {
+    useEffect(() => {
+        if ((!formFields.quest || !formFields.answers1
+            || !formFields.answers2 || !formFields.answers3)) {
+            if (stepNum === 0 || stepNum === 3) return
+            setStepNum(0)
+        }
+        else if (formFields.type === 'trivia' && !formFields.correct) setStepNum(1)
+        else if (formFields.quest && formFields.answers1 && formFields.answers2 && formFields.answers3) setStepNum(2)
+    }, [formFields])
+
+    const insertId = useRef('')
+
+    const handleChange = async (ev: React.FormEvent<HTMLInputElement | HTMLSelectElement>): Promise<void> => {
         ev.preventDefault()
         const field: string = ev.currentTarget.name
         setFormFields({ ...formFields, [field]: ev.currentTarget.value })
@@ -21,35 +35,33 @@ export function Create(): ReactElement {
 
     const onAddQuest = async (ev: React.FormEvent<HTMLFormElement>): Promise<void> => {
         ev.preventDefault()
-
-        if (!formFields.type) alert('Please set a type!')
-        else if (!formFields.quest) alert('Please set a quest!')
-        else if (!formFields.answers1) alert('Please set a answers 1!')
-        else if (!formFields.answers2) alert('Please set a answers 2!')
-        else if (!formFields.answers3) alert('Please set a answers 3!')
-        else if (!formFields.correct && formFields.type === 'trivia') alert('Please set a correct answers!')
-
-        else {
-            const aswers = [formFields.answers1, formFields.answers2, formFields.answers3]
-            await addQuest(formFields.type, formFields.quest, aswers, formFields.correct)
-            setFormFields({
-                type: '',
-                quest: '',
-                answers1: '',
-                answers2: '',
-                answers3: '',
-                correct: ''
-            })
-        }
+        const aswers = [formFields.answers1, formFields.answers2, formFields.answers3]
+        insertId.current = await addQuest(formFields.type, formFields.quest, aswers, formFields.correct)
+        setFormFields({
+            type: '',
+            quest: '',
+            answers1: '',
+            answers2: '',
+            answers3: '',
+            correct: ''
+        })
+        setStepNum(3)
     }
 
-    return <div className="main-create">
-        <h1 className="title">Vote Page</h1>
+    const finish = (() => {
+        insertId.current = ''
+        setStepNum(0)
+    })
+
+    return <div className="main-continer create">
+        <h1 className="title">Create Quest</h1>
 
         <div className="create-continer">
             <form onSubmit={onAddQuest}>
+                <p>Please set the question type and write a question and three answers.
+                    in a 'Trivia' type question choose the correct answer</p>
                 <div className="lable">
-                    <label htmlFor=""> &nbsp; &nbsp; &nbsp; &nbsp;Type: </label>
+                    <label htmlFor="">Type: </label>
                     <select className='select' id="type" name='type' onChange={handleChange} value={formFields.type} >
                         <option value='poll'>Poll</option>
                         <option value='trivia'>Trivia</option>
@@ -62,30 +74,38 @@ export function Create(): ReactElement {
                 </div>
 
                 <div className="lable">
-                    <label htmlFor=""> &nbsp; Answers 1: </label>
+                    <label htmlFor="">Answers 1: </label>
                     <input className='input' id="answers1" type='text' name='answers1' onChange={handleChange} value={formFields.answers1} />
                 </div>
 
                 <div className="lable">
-                    <label htmlFor=""> &nbsp; Answers 2: </label>
+                    <label htmlFor="">Answers 2: </label>
                     <input className='input' id="answers2" type='text' name='answers2' onChange={handleChange} value={formFields.answers2} />
                 </div>
 
                 <div className="lable">
-                    <label htmlFor=""> &nbsp; Answers 3: </label>
+                    <label htmlFor="">Answers 3: </label>
                     <input className='input' id="answers3" type='text' name='answers3' onChange={handleChange} value={formFields.answers3} />
                 </div>
 
-                <div className="lable">
-                    <label htmlFor=""> &nbsp; Correct: </label>
-                    <input className='input' id="correct" type='text' name='correct' onChange={handleChange} value={formFields.correct} />
-                </div>
+                {(stepNum >= 1 && formFields.type === 'trivia') && <div className="lable">
+                    <label htmlFor="">Correct: </label>
+                    <select className='select correct' id="correct" name='correct' onChange={handleChange} value={formFields.correct} >
+                        <option value=''>Please select the correct answer</option>
+                        <option value={formFields.answers1}>{formFields.answers1}</option>
+                        <option value={formFields.answers2}>{formFields.answers2}</option>
+                        <option value={formFields.answers3}>{formFields.answers3}</option>
+                    </select>
+                </div>}
 
-                <div className="lable">
-                    <button className='apply'>Apply</button>
-                </div>
+                {(stepNum === 2 && (formFields.correct || formFields.type === 'poll')) &&
+                    <div className="lable">
+                        <button className='apply'>Apply</button>
+                    </div>}
             </form>
         </div>
+
+        {stepNum === 3 && < CreateSuc insertId={insertId.current} finish={finish} />}
 
     </div>
 }

@@ -3,8 +3,12 @@
 /* Pages */
 @import "pages/main";
 @import "pages/create";
+@import "pages/vote";
 
 /* Components */
 @import "cmps/header";
 @import "cmps/side-bar";
-
+@import "cmps/create-suc";
+@import "cmps/answer-privew";
+@import "cmps/votes-privew";
+@import "cmps/footer";

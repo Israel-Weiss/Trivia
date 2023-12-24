@@ -6,9 +6,9 @@ interface Props { display: () => void }
 export function SideBar({ display }: Props): ReactElement {
 
     return <div className="side-bar-continer">
-        <Link to={''}><div onClick={display}>Home</div></Link>
-        <Link to={'vote'}><div onClick={display}>Vote</div></Link>
-        <Link to={'create'}><div onClick={display}>Create</div></Link>
+        <Link to={''}><li onClick={display}>Home</li></Link>
+        <Link to={'vote'}><li onClick={display}>Vote</li></Link>
+        <Link to={'create'}><li onClick={display}>Create</li></Link>
     </div>
 }
 

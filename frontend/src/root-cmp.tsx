@@ -1,6 +1,7 @@
 import { ReactElement } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import { Header } from './cmps/header'
+import { Footer } from './cmps/footer'
 import { Home } from './pages/home'
 import { Vote } from './pages/vote'
 import { Create } from './pages/create'
@@ -15,6 +16,7 @@ export default function App(): ReactElement {
             <Route path='vote' element={<Vote />} />
             <Route path='create' element={<Create />} />
         </Routes>
+        <Footer />
     </div>
 }
 

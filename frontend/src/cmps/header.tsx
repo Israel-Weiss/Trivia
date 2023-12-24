@@ -24,7 +24,7 @@ export function Header(): ReactElement {
         </div>
 
         <div className="header-mobile">
-            <h2 className="config">Configuration</h2>
+            <h2 className="config">Trivia Game</h2>
             <button className="menu-btn" onClick={toggleDisplay}>
                 <span _ngcontent-lvn-c33="">
                     <svg width="30" height="21" viewBox="0 0 30 21" fill="none" xmlns="http://www.w3.org/2000/svg">

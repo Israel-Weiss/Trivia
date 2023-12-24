@@ -1,34 +1,20 @@
 .main-app {
 
     .main-continer {
-        background-color: rgb(253, 253, 253);
+        margin-left: auto;
+        margin-right: auto;
+        background-color: rgb(253, 238, 238);
         height: 81vh;
+        max-width: 100%;
         padding: 30px;
+        text-align: center;
+
+        @include desktop-layout {
+            width: 400px;
+        }
     }
 
     .home {
-        display: grid;
-        grid-template-areas:
-            'annual score'
-            'breast breast';
-        grid-template-rows: 55% 1fr;
-        grid-template-columns: 1fr 1fr;
-        grid-gap: 15px;
+        font-size: larger;
     }
-}
-
-.trend1,
-.trend2,
-.trend3 {
-    background-color: rgb(233, 252, 255);
-}
-
-.trend1 {
-    grid-area: score;
-}
-.trend2 {
-    grid-area: annual;
-}
-.trend3 {
-    grid-area: breast;
 }

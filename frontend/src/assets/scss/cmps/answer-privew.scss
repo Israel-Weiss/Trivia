@@ -1,0 +1,33 @@
+.answer-privew{
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    border: solid 1px black;
+    background-color: rgb(214, 231, 244);
+    color: rgb(0, 0, 59);
+    text-align: center;
+
+    .txt {
+        margin-left: 10px;
+    }
+
+    .btn {
+        font-size: 23px;
+        width: 75px;
+        height: 48px;
+        margin-left: auto;
+        background-color: rgb(85, 217, 217);
+        color: rgb(0, 48, 31);
+        border: solid 1px;
+        border-color: white black black white;
+        cursor: pointer;
+    }
+
+    .btn:hover {
+        background-color: rgb(0, 63, 108);
+        color: antiquewhite;
+    }
+
+}

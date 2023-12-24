@@ -7,15 +7,13 @@
             display: flex;
             justify-content: space-between;
             height: 80px;
-            padding-left: 2vh;
-            padding-right: 2vh;
-            align-items: center;
+            padding-left: 6vw;
             background-color: #131921;
             color: aliceblue;
-            font-size: 1.2rem;
+            font-size: 1.4rem;
 
             .navigate {
-                width: 50vw;
+                width: 35vw;
                 margin-top: auto;
                 font-family: roboto, sans-serif;
 
@@ -23,7 +21,7 @@
                     display: flex;
                     justify-content: space-between;
                     list-style: none;
-                    margin-bottom: 15px;
+                    margin-bottom: 16px;
 
                     .link {
                         height: 30px;
@@ -32,31 +30,11 @@
                         text-align: center;
                         cursor: pointer;
 
-                        &::after {
-                            content: "";
-                            display: block;
-                            border-bottom: solid 4px chartreuse;
-                            width: 0;
-                            padding-top: 6px;
-                            position: relative;
-                            transition: width 0.3s;
-                        }
-
-
                         &:hover {
                             color: chartreuse;
-                            transition: 0.3s;
+                            transition: 0.1s;
                             font-size: 1.05em;
-
-                            &:hover::after {
-                                width: 100%;
-                            }
                         }
-
-                        &:active {
-                            color: brown;
-                        }
-
                     }
                 }
             }
@@ -100,5 +78,4 @@
             display: none;
         }
     }
-
 }

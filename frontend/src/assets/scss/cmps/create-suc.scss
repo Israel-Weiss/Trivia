@@ -1,0 +1,18 @@
+.create-suc {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 270px;
+    margin-left: auto;
+    padding: 20px;
+    padding-top: 0;
+    background-color: rgb(55, 255, 0);
+    color: rgb(147, 11, 11);
+    border: solid 1px black;
+
+    .btn {
+        margin-top: 10px;
+        font-size: 1.2rem;
+        cursor: pointer;
+    }
+}
