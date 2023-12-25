@@ -14,6 +14,8 @@ export function Create(): ReactElement {
     })
 
     const [stepNum, setStepNum] = useState(0)
+    const [wait, setWait] = useState(false)
+
 
     useEffect(() => {
         if ((!formFields.quest || !formFields.answers1
@@ -35,6 +37,7 @@ export function Create(): ReactElement {
 
     const onAddQuest = async (ev: React.FormEvent<HTMLFormElement>): Promise<void> => {
         ev.preventDefault()
+        setWait(true)
         const aswers = [formFields.answers1, formFields.answers2, formFields.answers3]
         insertId.current = await addQuest(formFields.type, formFields.quest, aswers, formFields.correct)
         setFormFields({
@@ -46,6 +49,7 @@ export function Create(): ReactElement {
             correct: ''
         })
         setStepNum(3)
+        setWait(false)
     }
 
     const finish = (() => {
@@ -55,6 +59,8 @@ export function Create(): ReactElement {
 
     return <div className="main-continer create">
         <h1 className="title">Create Quest</h1>
+
+        {wait && <h3>Please wait while we load data..</h3>}
 
         <div className="create-continer">
             <form onSubmit={onAddQuest}>
@@ -98,7 +104,7 @@ export function Create(): ReactElement {
                     </select>
                 </div>}
 
-                {(stepNum === 2 && (formFields.correct || formFields.type === 'poll')) &&
+                {(stepNum === 2 && (formFields.correct || formFields.type === 'poll') && !wait) &&
                     <div className="lable">
                         <button className='apply'>Apply</button>
                     </div>}

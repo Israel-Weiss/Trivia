@@ -16,6 +16,8 @@ export function Vote(): ReactElement {
         isCorrect: null
     })
 
+    const [wait, setWait] = useState(false)
+
     const currentId = useRef('')
 
     useEffect(() => {
@@ -35,18 +37,22 @@ export function Vote(): ReactElement {
 
     const onGetQuest = async (ev: React.FormEvent<HTMLFormElement>) => {
         ev.preventDefault()
+        setWait(true)
         const quest: QuestResData = await getQuest(currentId.current)
         console.log('onGetQuest', currentId.current);
         setQuest(quest)
+        setWait(false)
     }
 
     const vote = async (answer: string) => {
+        setWait(true)
         const voteRes: VotesResData = await updateQuest(currentId.current, answer)
         setComment(voteRes)
         setQuest({
             quest: '',
             ansList: []
         })
+        setWait(false)
     }
 
     const finish = () => {
@@ -59,9 +65,11 @@ export function Vote(): ReactElement {
 
     return <div className="main-continer vote">
         <h1 className="title">Vote Page</h1>
-        
-        {!currentId.current && <div className="reqQuest">
-            <h2>Please enter ques id</h2>
+
+        {wait && <h3>Please wait while we load data..</h3>}
+
+        {(!currentId.current && !wait) && <div className="reqQuest">
+            <h2>Please enter quest id</h2>
             <form onSubmit={onGetQuest}>
                 <div className="lable">
                     <label htmlFor="">Quest id: </label>
@@ -71,7 +79,7 @@ export function Vote(): ReactElement {
             </form>
         </div>}
 
-        {quest.quest && <div>
+        {(quest.quest && !wait) && <div>
             <h2>{quest.quest}</h2>
             {quest.ansList.map((answer: string) => < AnswerPrivew answer={answer} vote={vote} key={answer} />)}
         </div>}
